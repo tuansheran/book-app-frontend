@@ -1,6 +1,8 @@
 // src/App.tsx
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import BookList from './pages/BookList/BookList';
 import BookDetail from './pages/BookDetails/BookDetail';
 import AddBook from './pages/AddBook/AddBook';
@@ -10,6 +12,19 @@ import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   return (
     <Router>
+      {/* Toast Container */}
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<ProtectedRoute><BookList /></ProtectedRoute>} />
@@ -21,6 +36,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
