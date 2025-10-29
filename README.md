@@ -12,10 +12,10 @@ A React + Redux Toolkit + RTK Query app to manage books with authentication.
 
 ## Setup
 
-1. Clone repo:
+1. Clone repo and install dep
 
-git clone <repo-url>
-cd <repo-folder>
+git clone 
+cd 
 yarn install
 
 2. Update the API base URL in src/services/booksApi.ts
