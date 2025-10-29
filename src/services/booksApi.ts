@@ -6,24 +6,33 @@ export const booksApi = createApi({
   reducerPath: 'booksApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseURI }),
   endpoints: (builder) => ({
-    getBooks: builder.query<PaginatedBooks, { page?: number }>({
-      query: ({ page = 1 }) => `books?page=${page}`,
-      transformResponse: (response: { data: any; meta: any; links: any }) => ({
-        data: response.data.map((b: any) => ({
-          id: b.id,
-          title: b.title,
-          author: b.author,
-          publishedDate: b.published_date,
-          available: b.availability,
-        })),
-        meta: {
-          page: response.meta.current_page,
-          totalPages: response.meta.last_page,
-          prev_page_url: response.links.prev,
-          next_page_url: response.links.next,
-        },
-      }),
-    }),
+    getBooks: builder.query<PaginatedBooks, { page?: number; author?: string; availability?: string }>({
+  query: ({ page = 1, author, availability }) => {
+    const params = new URLSearchParams({ page: page.toString() });
+
+    if (author) params.append('author', author);
+    if (availability) params.append('availability', availability); // use availability instead of date
+
+    return `books?${params.toString()}`;
+  },
+  transformResponse: (response: { data: any[]; meta: any; links: any }) => ({
+    data: response.data.map((b: any) => ({
+      id: b.id,
+      title: b.title,
+      author: b.author,
+      publishedDate: b.published_date,
+      available: b.availability, // map backend 'availability' field
+    })),
+    meta: {
+      page: response.meta.current_page,
+      totalPages: response.meta.last_page,
+      prev_page_url: response.links.prev,
+      next_page_url: response.links.next,
+    },
+  }),
+}),
+
+
 
     getBookById: builder.query<Book, number>({
       query: (id) => `books/${id}`,

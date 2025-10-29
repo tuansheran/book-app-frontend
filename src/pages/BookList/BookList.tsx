@@ -6,7 +6,15 @@ import './BookList.css';
 
 const BookList: React.FC = () => {
   const [page, setPage] = React.useState(1);
-  const { data, error, isLoading } = useGetBooksQuery({ page });
+  const [author, setAuthor] = React.useState('');
+  const [availability, setAvailability] = React.useState(''); // available / rented / ''
+
+  // Pass availability instead of date
+  const { data, error, isLoading } = useGetBooksQuery({ page, author, availability });
+
+  const handleFilterChange = () => {
+    setPage(1); // reset pagination when filtering
+  };
 
   if (isLoading) return <div className="loading">📚 Loading books...</div>;
   if (error) return <div className="error">❌ Failed to load books.</div>;
@@ -17,6 +25,27 @@ const BookList: React.FC = () => {
   return (
     <div className="book-list-container">
       <h1 className="book-list-title">📖 Available Books</h1>
+
+      {/* Filters */}
+      <div className="filters">
+        <input
+          type="text"
+          placeholder="Filter by author"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+        />
+
+        <select
+          value={availability}
+          onChange={(e) => setAvailability(e.target.value)}
+        >
+          <option value="">All</option>
+          <option value="available">✅ Available</option>
+          <option value="rented">❌ Rented</option>
+        </select>
+
+        <button onClick={handleFilterChange}>Apply Filters</button>
+      </div>
 
       {books.length ? (
         <>
@@ -35,18 +64,17 @@ const BookList: React.FC = () => {
             ))}
           </div>
 
-          {/* Pagination */}
           <div className="pagination">
             <button
               disabled={!pagination?.prev_page_url}
-              onClick={() => setPage(prev => Math.max(1, prev - 1))}
+              onClick={() => setPage((prev) => Math.max(1, prev - 1))}
             >
               ⬅ Previous
             </button>
             <span>Page {pagination?.page} of {pagination?.totalPages}</span>
             <button
               disabled={!pagination?.next_page_url}
-              onClick={() => setPage(prev => Math.min(pagination!.totalPages, prev + 1))}
+              onClick={() => setPage((prev) => Math.min(pagination!.totalPages, prev + 1))}
             >
               Next ➡
             </button>
@@ -60,6 +88,7 @@ const BookList: React.FC = () => {
 };
 
 export default BookList;
+
 
 
 
