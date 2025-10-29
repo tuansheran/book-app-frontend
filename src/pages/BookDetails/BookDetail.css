@@ -1,0 +1,76 @@
+.book-detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #e0f7ff;
+  min-height: 100vh;
+  gap: 2rem; /* space between multiple cards if present */
+  flex-wrap: wrap; /* allow wrapping on smaller screens */
+}
+
+.book-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 210px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 1rem; /* adds space around each card */
+}
+
+.book-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #0077b6;
+}
+
+.status {
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.status.available {
+  color: green;
+}
+
+.status.rented {
+  color: red;
+}
+
+.action-button {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: #fff;
+  margin-top: 1rem; /* space above button */
+}
+
+.action-button.rent {
+  background-color: #0077b6;
+}
+
+.action-button.rent:hover {
+  background-color: #005f87;
+}
+
+.action-button.return {
+  background-color: #d62828;
+}
+
+.action-button.return:hover {
+  background-color: #a11b1b;
+}
+
+.loading, .error, .no-book {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.2rem;
+}
+
