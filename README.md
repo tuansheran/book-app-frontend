@@ -26,8 +26,6 @@ A React + Redux Toolkit + RTK Query app to manage books with authentication.
 
        yarn dev
 
-yarn dev
-
 4. Password for login 
 
        Username: user
